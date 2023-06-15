@@ -122,13 +122,24 @@ formal_consults <- formal_consults[formal_consults_ix]
 
 patron_counts <- data.frame(sort(table(formal_consults), decreasing = TRUE))
 
+### FINDING COUNT OF MEETINGS OVER TIME
+
+ds_meeting_by_month <- ds_meetings %>% 
+  group_by(month = floor_date(`Event Date and Time (System required field)`, 
+                              "month")) %>%
+  summarize(consultation_count = n())
+
+ds_meeting_by_month$month_name <- 
+  paste(month(ds_meeting_by_month$month, label = TRUE), year(ds_meeting_by_month$month))
+
 ### FINDING UCLA AFFILIATION OF PATRONS
 
 # This information wasn't gathered effectively for this report. Future reports
 # should have code written to include this information.
 
 # FINDING THE DEPARTMENTS DSC WORKED WITH
-# In the future, this should just be DataSquad but there wasn't enough information
+# In the future, this should just be DataSquad but there wasn't enough data
+# so this is regarding all DSC consultations
 
 depts <- li[, "School/Department/Center", drop = TRUE]
 

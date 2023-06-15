@@ -17,29 +17,37 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, fig.height = 4.25)
 source("DSC_Consultations_Analysis_2023.R")
 ```
 
-## Executive Summary
+The Norman Powell UCLA DataSquad is a team of undergraduate students within the UCLA Library Data Science Center dedicated to supporting data-intensive scholarship. DataSquad works to fulfill the DSC’s mission of facilitating sustainable, replicable, and reproducible data processes for research and teaching. With a team of skilled members and a track record of successful projects, we aim to expand our impact and help make UCLA research more transparent, reliable, and accessible.
 
-The Norman Powell UCLA DataSquad is a team of undergraduate students within the UCLA Library Data Science Center dedicated to supporting data-related research. DataSquad works to carry out the DSC’s mission of facilitating sustainable, replicable, and reproducible data processes for research, teaching, and workflows. With a team of skilled members and a track record of successful projects, we aim to expand our impact and secure funding for future growth.
+* **Team:** UCLA DataSquad is led by `r params$pm`, the project manager, who oversees the team's operations and ensures project success. The data science consultants, `r params$con1` and `r params$con2`, bring technical expertise and collaborate closely with clients. The technical writer, `r params$tr`, contributes to the consulting service, communicates project outcomes, and facilities outreach. Tim Dennis and Zhiyuan Yao act as program co-directors for the DataSquad and DSC consultants, Leigh Phan, Kristian Allen and Jamie Jamison provide mentoring support. 
 
-UCLA DataSquad is led by Vince Front, the project manager, who oversees the team's operations and ensures project success. The data science consultants, Shail Mirpuri and Tristan Dewing, bring technical expertise and collaborate closely with clients. The technical writer, Emily Gong, contributes to the consulting service, communicates project outcomes, and facilities outreach.
+* **Services:** DataSquad offers various services, including data collection, coding consultations, and dashboard development. Between DSC outreach, individual patron projects, and large research projects, DataSquad has completed `r consultation_count` total consultations over its two-year history. This includes creating a dashboard for college student demographics, tracking and visualizing police helicopter flight patterns, and digitizing valuable survey data.
 
-## Services
+* **Audience:** Our target audience includes researchers, professors, and students at UCLA who require assistance with data-related tasks. Over the two-year history of DataSquad, we have gained valuable experience and built a reputation for delivering reliable data solutions to various departments. Our services have established a strong presence in `r top3depts[1]`, `r top3depts[2]`, and `r top3depts[3]`, among other schools. 
 
-DataSquad offers various services, including data collection, coding consultations, and dashboard development. Between DSC outreach, individual patron projects, and large research projects, DataSquad has completed `r consultation_count` total consultations over its two-year history. This includes creating a dashboard for college student demographics, tracking and visualizing police helicopter flight patterns, and digitizing valuable survey data.
+* **Challenges:** Potential risks include changes in funding availability and scalability challenges. To mitigate these risks, we will focus on diversifying our funding sources and aiming to expand our services. We hope to secure a balanced portfolio of library resources and external gifts to support our expanding team.
 
-Our target audience includes researchers, professors, and students at UCLA who require assistance with data-related tasks. Over the two-year history of DataSquad, we have gained valuable experience and built a reputation for delivering reliable data solutions to various departments. Our services have established a strong presence in `r top3depts[1]`, `r top3depts[2]`, and `r top3depts[3]`, among other schools.
-
-## Risk Assessment
-
-Potential risks include changes in funding availability and scalability challenges. To mitigate these risks, we will focus on diversifying our funding sources and aiming to expand our services. We hope to secure a balanced portfolio of library resources and external gifts to support our expanding team.
-
-## Conclusion
-
-DataSquad has demonstrated its ability to provide valuable data services to the UCLA community. With a talented team, a growing client base, and a strategic expansion plan, we are confident in our ability to meet the demands of the Data Science Center. By hiring more members, securing diversified funding, and continuing to deliver exceptional results, we envision a successful and sustainable future for DataSquad.
+* **Conclusion:** DataSquad has demonstrated its ability to provide valuable data services to the UCLA community. With a talented team, a growing client base, and a strategic expansion plan, we are confident in our ability to meet the demands of the Data Science Center. By hiring more members, securing diversified funding, and continuing to deliver exceptional results, we envision a successful and sustainable future for DataSquad.
 
 \pagebreak
 
 # Summary Visualizations
+
+```{r}
+ggplot(ds_meeting_by_month, aes(x = month, y = consultation_count)) + 
+  geom_line() +
+  # geom_smooth(se = FALSE, lwd = 0.5) +
+  scale_x_datetime(date_breaks = "1 month", date_labels =  "%b %Y") +
+  scale_y_continuous(breaks = seq(0, 16, 2)) +
+  xlab("Month") +
+  ggtitle("Number of DataSquad Consultations Over Time") + 
+  theme_fivethirtyeight() +
+  theme(axis.text.x = element_text(size = 7.5, angle = 40),
+        panel.grid.major.x = element_blank(),
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA)
+        )
+```
 
 ```{r}
 ggplot(patron_counts, aes(x = formal_consults, y = Freq)) + 
@@ -47,7 +55,7 @@ ggplot(patron_counts, aes(x = formal_consults, y = Freq)) +
   xlab("Consultation Type") +
   ylab("Number of Consultations") +
   scale_y_continuous(breaks = seq(0, 16, 2)) +
-  ggtitle("Types of New Patron DataSquad Consultations") + 
+  ggtitle("First-Time Patron DataSquad Consultation Types") + 
   scale_fill_brewer(palette = "Blues") +
   theme_fivethirtyeight() +
   theme(axis.text.x = element_text(size = 7.5),
@@ -56,6 +64,7 @@ ggplot(patron_counts, aes(x = formal_consults, y = Freq)) +
         plot.background = element_rect(fill = "transparent", color = NA)
         )
 ```
+
 
 ```{r}
 ggplot(top10_depts, aes(x = depts, y = Freq)) + 
