@@ -132,6 +132,8 @@ ds_meeting_by_month <- ds_meetings %>%
 ds_meeting_by_month$month_name <- 
   paste(month(ds_meeting_by_month$month, label = TRUE), year(ds_meeting_by_month$month))
 
+ds_meeting_by_month <- ds_meeting_by_month[ds_meeting_by_month$month_name != "Mar 2023", ]
+
 ### FINDING UCLA AFFILIATION OF PATRONS
 
 # This information wasn't gathered effectively for this report. Future reports
